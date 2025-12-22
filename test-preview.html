@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Dashboard Preview</title>
+    <style>
+        /* Include the key styles for testing */
+        body {
+            background: linear-gradient(135deg, #0a0a1a 0%, #1e1e3a 30%, #2a1f4a 50%, #1a2a4a 70%, #0a0a1a 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px) saturate(160%);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            color: white;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .hero-card {
+            height: 400px;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            cursor: help;
+            transition: all 0.3s ease;
+        }
+        
+        .status-online {
+            background-color: #10b981;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+        }
+        
+        .hero-label {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        .hero-info {
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            text-align: center;
+            padding: 0.5rem 0;
+        }
+        
+        .status-text {
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-value {
+            font-weight: 600;
+            text-transform: capitalize;
+            font-size: 0.95rem;
+        }
+        
+        .status-online.status-value {
+            color: #10b981;
+        }
+        
+        .location-info, .uptime-info {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.6rem;
+        }
+        
+        .resource-info {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            margin-top: 0.8rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .resource-info span {
+            font-weight: 500;
+        }
+        
+        /* Acrylic info cards */
+        .info-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px) saturate(160%);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.8rem 1.2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Modern dashboard link styling */
+        .dashboard-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+            padding-bottom: 2px;
+        }
+        
+        .dashboard-link:hover {
+            color: rgba(139, 92, 246, 1);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.6);
+            text-shadow: 0 0 4px rgba(139, 92, 246, 0.3);
+        }
+        
+        .icon-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+        
+        .icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-card hero-card">
+        <div class="status-indicator status-online" title="System is running normally"></div>
+        <div class="hero-label">Proxmox</div>
+        
+        <div class="hero-info">
+            <div class="info-card status-text">Status: <span class="status-value status-online">online</span></div>
+            <div class="info-card location-info">Location: <a href="https://proxmox.local:8006" class="dashboard-link" target="_blank" rel="noopener noreferrer">Homelab Server Rack</a></div>
+            <div class="info-card uptime-info">Uptime: 45 days, 12:34:56</div>
+            <div class="info-card resource-info">
+                <span>CPU: 24%</span> | <span>RAM: 64%</span> | <span>Storage: 42%</span>
+            </div>
+        </div>
+        
+        <div class="icon-row">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6" y2="6"></line>
+                <line x1="6" y1="18" x2="6" y2="18"></line>
+            </svg>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="16" y="16" width="8" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="16" width="8" height="8" rx="2" ry="2"></rect>
+                <rect x="9" y="2" width="8" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="16" x2="6" y2="16"></line>
+                <line x1="18" y1="16" x2="18" y2="16"></line>
+            </svg>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,16 +1,69 @@
----
+<!--
+  Homelab Dashboard - 1280x400 UltraWide Layout
+  Features:
+  - Hero Column (Featured Card) on the left
+  - 2x4 grid of small tiles on the right
+  - Glassmorphism styling
+  - Responsive design
+-->
 
+---
+import DashboardCard from '../components/DashboardCard.astro';
+import '../styles/dashboard.css';
+
+// Dashboard data configuration
+const dashboardConfig = {
+  heroCard: {
+    title: 'Proxmox',
+    status: 'online',
+    icons: ['server', 'network', 'storage'],
+    isHero: true
+  },
+  smallTiles: [
+    { title: 'Pi-hole', status: 'online', icons: ['network', 'settings'] },
+    { title: 'Home Assistant', status: 'online', icons: ['server', 'power'] },
+    { title: 'Nextcloud', status: 'online', icons: ['storage', 'network'] },
+    { title: 'Portainer', status: 'online', icons: ['docker', 'settings'] },
+    { title: 'Plex', status: 'warning', icons: ['server', 'temperature'] },
+    { title: 'qBittorrent', status: 'online', icons: ['network', 'storage'] }
+  ]
+};
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Homelab Dashboard</title>
+  </head>
+  <body>
+    <div class="dashboard-wrapper">
+      <div class="dashboard-container">
+        <div class="dashboard-grid">
+        <!-- Hero Column -->
+        <div class="hero-column">
+          <DashboardCard 
+            title={dashboardConfig.heroCard.title} 
+            status={dashboardConfig.heroCard.status}
+            icons={dashboardConfig.heroCard.icons}
+            isHero={dashboardConfig.heroCard.isHero}
+          />
+        </div>
+        
+        <!-- Small Tiles Grid -->
+        {dashboardConfig.smallTiles.map((tile, index) => (
+          <div class="small-tile">
+            <DashboardCard 
+              title={tile.title} 
+              status={tile.status}
+              icons={tile.icons}
+            />
+          </div>
+        ))}
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
