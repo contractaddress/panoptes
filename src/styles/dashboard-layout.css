@@ -1,0 +1,108 @@
+/* Dashboard Layout Styles */
+
+/* Dashboard Container */
+.dashboard-container {
+  width: 1280px;
+  height: 400px;
+  margin: 0 auto;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #30303024;
+  backdrop-filter: blur(8px) saturate(10%);
+  -webkit-backdrop-filter: blur(8px) saturate(10%);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+
+  /* Enforce exact aspect ratio */
+  aspect-ratio: 1280 / 400;
+  min-width: 1280px;
+  min-height: 400px;
+}
+
+/* Acrylic noise texture for realism */
+.dashboard-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.08) 1px, transparent 0);
+  background-size: 20px 20px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Grid Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  height: 100%;
+}
+
+/* Hero Column (Featured Card) */
+.hero-column {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Small Tiles */
+.small-tile {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+/* Services Hero Column (Right side) */
+.services-column {
+  grid-column: 4;
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dashboard wrapper for proper scaling */
+.dashboard-wrapper {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 1280px) {
+  .dashboard-container {
+    width: 100%;
+    height: auto;
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-column {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-column {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}

@@ -1,0 +1,122 @@
+/* Hero Info Card Styles */
+
+/* Acrylic info cards */
+.info-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.8rem 1.2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.info-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.08) 1px, transparent 0);
+  background-size: 15px 15px;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.info-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Status Text */
+.status-text {
+  margin-bottom: 0;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.status-value {
+  font-weight: 700;
+  text-transform: capitalize;
+  font-size: 0.95rem;
+}
+
+.status-online.status-value {
+  color: #053f2cff;
+  margin-left: 10px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  border-radius: 9px;
+}
+
+.status-warning.status-value {
+  color: #f59e0b;
+}
+
+.status-offline.status-value {
+  color: #ef4444;
+}
+
+/* Location and Uptime Info */
+.location-info {
+  font-weight: 600;
+}
+
+.location-info, .uptime-info {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0;
+}
+
+/* Dashboard Links */
+.dashboard-link {
+  color: #ffc153e5;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding-bottom: 2px;
+  margin-left: 6px;
+}
+
+.dashboard-link:hover {
+  color: #ffc153e5;
+  border-bottom: 1px solid #ffc0534d;
+  text-shadow: 0 0 4px #ffc0534d;
+}
+
+.location-info .dashboard-link {
+  color: #ff8834e6;
+  text-shadow: 0 0 4px #272515a6;
+}
+
+.location-info .dashboard-link:hover {
+  color: #ffcf53ff;
+}
+
+/* Icon Row (legacy) */
+.icon-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.icon-row svg {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.icon-row svg:hover {
+  opacity: 1;
+}

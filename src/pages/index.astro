@@ -8,27 +8,10 @@
 -->
 
 ---
-import DashboardCard from '../components/DashboardCard.astro';
+import DashboardLayout from '../layouts/DashboardLayout.astro';
 import BeamsBackground from '../components/BeamsBackground.jsx';
+import { dashboardConfig } from '../config/dashboard.config.js';
 import '../styles/dashboard.css';
-
-// Dashboard data configuration
-const dashboardConfig = {
-  heroCard: {
-    title: 'Proxmox',
-    status: 'online',
-    icons: ['server', 'network', 'storage'],
-    isHero: true
-  },
-  smallTiles: [
-    { title: 'OpenWRT', status: 'online', icons: ['network', 'settings'] },
-    { title: 'Pi-hole', status: 'online', icons: ['server', 'power'] },
-    { title: 'Nextcloud', status: 'online', icons: ['storage', 'network'] },
-    { title: 'Wireguard', status: 'online', icons: ['docker', 'settings'] },
-    { title: 'Nginx proxy', status: 'warning', icons: ['server', 'temperature'] },
-    { title: 'qBittorrent', status: 'online', icons: ['network', 'storage'] }
-  ]
-};
 ---
 
 <html lang="en">
@@ -41,31 +24,6 @@ const dashboardConfig = {
   </head>
   <body>
     <BeamsBackground client:load />
-    <div class="dashboard-wrapper">
-      <div class="dashboard-container">
-        <div class="dashboard-grid">
-        <!-- Hero Column -->
-        <div class="hero-column">
-          <DashboardCard
-            title={dashboardConfig.heroCard.title}
-            status={dashboardConfig.heroCard.status}
-            icons={dashboardConfig.heroCard.icons}
-            isHero={dashboardConfig.heroCard.isHero}
-          />
-        </div>
-
-        <!-- Small Tiles Grid -->
-        {dashboardConfig.smallTiles.map((tile, index) => (
-          <div class="small-tile">
-            <DashboardCard
-              title={tile.title}
-              status={tile.status}
-              icons={tile.icons}
-            />
-          </div>
-        ))}
-        </div>
-      </div>
-    </div>
+    <DashboardLayout config={dashboardConfig} />
   </body>
 </html>

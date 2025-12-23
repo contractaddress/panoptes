@@ -1,0 +1,52 @@
+<!--
+  Hero Card Component
+  Props:
+    - title: Card title/label
+    - status: 'online', 'offline', or 'warning'
+    - icon: Path to icon/logo image
+    - content: Object with status, location {text, url}, and uptime
+-->
+
+---
+import { getStatusTooltip } from '../utils/statusTooltip.js';
+
+const { title, status = 'online', icon = null, content } = Astro.props;
+---
+
+<div class="dashboard-card hero-card">
+  <div class={`status-indicator status-${status}`} title={getStatusTooltip(status)}></div>
+  <div class="card-label hero-label">{title}</div>
+
+  <div class="hero-info">
+    <div class="hero-logo">
+      {icon && <img class="proxmox-icon" src={icon} alt={title} />}
+    </div>
+
+    {content && (
+      <>
+        <div class="info-card status-text">
+          Status: <span class={`status-value status-${content.status}`}>{content.status}</span>
+        </div>
+
+        {content.location && (
+          <div class="info-card location-info">
+            Location: <a
+              href={content.location.url}
+              class="dashboard-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {content.location.text}
+            </a>
+          </div>
+        )}
+
+        {content.uptime && (
+          <div class="info-card uptime-info">
+            Uptime: {content.uptime}
+          </div>
+        )}
+      </>
+    )}
+  </div>
+</div>

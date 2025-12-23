@@ -1,0 +1,49 @@
+<!--
+  Dashboard Layout Component
+  Props:
+    - config: Dashboard configuration object with heroCard, smallTiles, servicesCard
+-->
+
+---
+import HeroCard from '../components/HeroCard.astro';
+import DashboardCard from '../components/DashboardCard.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+
+const { config } = Astro.props;
+---
+
+<div class="dashboard-wrapper">
+  <div class="dashboard-container">
+    <div class="dashboard-grid">
+      <!-- Hero Column -->
+      <div class="hero-column">
+        <HeroCard
+          title={config.heroCard.title}
+          status={config.heroCard.status}
+          icon={config.heroCard.icon}
+          content={config.heroCard.content}
+        />
+      </div>
+
+      <!-- Small Tiles Grid (Columns 2-3) -->
+      {config.smallTiles.map((tile) => (
+        <div class="small-tile">
+          <DashboardCard
+            title={tile.title}
+            status={tile.status}
+            icon={tile.icon}
+          />
+        </div>
+      ))}
+
+      <!-- Services Column (Column 4) -->
+      <div class="services-column">
+        <ServiceCard
+          title={config.servicesCard.title}
+          status={config.servicesCard.status}
+          logos={config.servicesCard.logos}
+        />
+      </div>
+    </div>
+  </div>
+</div>

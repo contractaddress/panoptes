@@ -1,0 +1,17 @@
+---
+import { getStatusTooltip } from '../utils/statusTooltip.js';
+
+const { title, status = 'online', logos = [] } = Astro.props;
+---
+
+<div class="dashboard-card hero-card">
+  <div class={`status-indicator status-${status}`} title={getStatusTooltip(status)}></div>
+  <div class="card-label hero-label">{title}</div>
+  <div class="logo-grid">
+    {logos.map((logo) => (
+      <div class="logo-box">
+        {logo.icon && <img src={logo.icon} alt={logo.name} title={logo.name} />}
+      </div>
+    ))}
+  </div>
+</div>
