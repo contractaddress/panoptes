@@ -9,6 +9,7 @@
 
 ---
 import DashboardCard from '../components/DashboardCard.astro';
+import BeamsBackground from '../components/BeamsBackground.jsx';
 import '../styles/dashboard.css';
 
 // Dashboard data configuration
@@ -39,24 +40,25 @@ const dashboardConfig = {
     <title>Homelab Dashboard</title>
   </head>
   <body>
+    <BeamsBackground client:load />
     <div class="dashboard-wrapper">
       <div class="dashboard-container">
         <div class="dashboard-grid">
         <!-- Hero Column -->
         <div class="hero-column">
-          <DashboardCard 
-            title={dashboardConfig.heroCard.title} 
+          <DashboardCard
+            title={dashboardConfig.heroCard.title}
             status={dashboardConfig.heroCard.status}
             icons={dashboardConfig.heroCard.icons}
             isHero={dashboardConfig.heroCard.isHero}
           />
         </div>
-        
+
         <!-- Small Tiles Grid -->
         {dashboardConfig.smallTiles.map((tile, index) => (
           <div class="small-tile">
-            <DashboardCard 
-              title={tile.title} 
+            <DashboardCard
+              title={tile.title}
               status={tile.status}
               icons={tile.icons}
             />

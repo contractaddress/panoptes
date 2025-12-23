@@ -1,0 +1,44 @@
+// Dashboard Interactivity Script
+// Handles click-to-expand functionality for small cards
+
+document.addEventListener('DOMContentLoaded', function() {
+  // State to track which card is expanded
+  let expandedCard = null;
+  
+  // Get all small dashboard cards (excluding hero card)
+  const smallCards = document.querySelectorAll('.dashboard-card:not(.hero-card)');
+  
+  // Add click event listeners to each small card
+  smallCards.forEach(card => {
+    card.addEventListener('click', function() {
+      const container = this.closest('.small-tile');
+      
+      // If this card is already expanded, collapse it
+      if (this.classList.contains('expanded-card')) {
+        this.classList.remove('expanded-card');
+        container.classList.remove('expanded-container');
+        expandedCard = null;
+        return;
+      }
+      
+      // If another card is expanded, collapse it first
+      if (expandedCard) {
+        expandedCard.classList.remove('expanded-card');
+        expandedCard.closest('.small-tile').classList.remove('expanded-container');
+      }
+      
+      // Expand this card
+      this.classList.add('expanded-card');
+      container.classList.add('expanded-container');
+      expandedCard = this;
+    });
+  });
+  
+  // Close expanded card when clicking outside
+  document.addEventListener('click', function(event) {
+    if (expandedCard && !expandedCard.contains(event.target)) {
+      expandedCard.classList.remove('expanded-card');
+      expandedCard = null;
+    }
+  });
+});
