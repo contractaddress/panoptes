@@ -160,6 +160,10 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+.hero-label.card-label {
+  width: 120;
+}
+
 .hero-logo {
   width: auto;
   height: 80px;
@@ -288,13 +292,6 @@
 
 .location-info .dashboard-link:hover {
   color: #ffcf53ff;
-}
-
-.card-label {
-  font-size: 0.9rem;
-  font-weight: 500;
-  margin-bottom: auto;
-  text-align: center;
 }
 
 .icon-row {
