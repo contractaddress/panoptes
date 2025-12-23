@@ -28,25 +28,17 @@ function getStatusTooltip(status) {
 <div class={`dashboard-card ${isHero ? 'hero-card' : ''}`}>
   <div class={`status-indicator status-${status}`} title={getStatusTooltip(status)}></div>
   <div class={`card-label ${isHero ? 'hero-label' : ''}`}>{title}</div>
-  
   {isHero && (
     <div class="hero-info">
+      <div class="hero-logo">
+        <img class="proxmox-icon" src="/proxmox.svg" alt="Proxmox Logo" />
+      </div>
       <div class="info-card status-text">Status: <span class={`status-value status-${status}`}>{status}</span></div>
       <div class="info-card location-info">Location: <a href="https://proxmox.local:8006" class="dashboard-link" target="_blank" rel="noopener noreferrer">proxmox.local</a></div>
       <div class="info-card uptime-info">Uptime: 45 days, 12:34:56</div>
-      <div class="info-card resource-info">
-        <span>CPU: 24%</span> | <span>RAM: 64%</span> | <span>Storage: 42%</span>
-      </div>
     </div>
   )}
 <!---
 icons here
 --->
 </div>
-
-<style>
-  .icon {
-    width: 16px;
-    height: 16px;
-  }
-</style>

@@ -99,6 +99,8 @@
 /* Hero Card Specific Styles */
 .hero-card {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Card Anatomy Components */
@@ -154,8 +156,26 @@
 .hero-label {
   font-size: 1.5rem !important;
   font-weight: 600 !important;
-  margin-bottom: 1.5rem !important;
+  margin-bottom: 0px !important;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-logo {
+  width: auto;
+  height: 80px;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.proxmox-icon {
+  width: 100%;
+  height: 100%;
+  max-width: 120px;
+  max-height: 80px;
+  object-fit: contain;
 }
 
 .hero-info {
@@ -181,6 +201,8 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .info-card::before {
@@ -205,7 +227,8 @@
 
 .status-text {
   margin-bottom: 0;
-  font-weight: 500;
+  font-weight: 700;
+  font-size: 0.95rem;
 }
 
 .status-value {
@@ -216,6 +239,12 @@
 
 .status-online.status-value {
   color: #053f2cff;
+  margin-left: 10px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  border-radius: 9px;
 }
 
 .status-warning.status-value {
@@ -226,51 +255,39 @@
   color: #ef4444;
 }
 
+
+.location-info {
+  font-weight: 600;
+}
+
 .location-info, .uptime-info {
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 0;
 }
 
-.resource-info {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.8rem;
-  margin-top: 0;
-  padding-top: 0;
-}
-
-.resource-info span {
-  font-weight: 500;
-  margin-top: 8px;
-}
-
-/* Modern dashboard link styling */
 .dashboard-link {
-  color: rgba(139, 92, 246, 0.7); /* Soft purple */
+  color: #ffc153e5;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
-  border-bottom: 1px solid rgba(139, 92, 246, 0.3);
   padding-bottom: 2px;
+  margin-left: 6px;
 }
 
 .dashboard-link:hover {
-  color: rgba(139, 92, 246, 1); /* Brighter purple on hover */
-  border-bottom: 1px solid rgba(139, 92, 246, 0.6);
-  text-shadow: 0 0 4px rgba(139, 92, 246, 0.3);
+  color: #ffc153e5;
+  border-bottom: 1px solid #ffc0534d;
+  text-shadow: 0 0 4px #ffc0534d;
 }
 
-.dashboard-link:active {
-  color: rgba(139, 92, 246, 0.8);
-  transform: translateY(1px);
-}
 
-/* Ensure links inherit the location info color when not hovered */
 .location-info .dashboard-link {
-  color: rgba(255, 255, 255, 0.9);
+  color: #ff8834e6;
+  text-shadow: 0 0 4px #272515a6 ;
 }
 
 .location-info .dashboard-link:hover {
-  color: rgba(139, 92, 246, 1);
+  color: #ffcf53ff;
 }
 
 .card-label {
