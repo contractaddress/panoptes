@@ -26,15 +26,4 @@ const { title, status = 'online', icon = null, isHero = false } = Astro.props;
       <img src={icon} alt={title} />
     </div>
   )}
-
-  {isHero && (
-    <div class="hero-info">
-      <div class="hero-logo">
-        <slot name="icon">
-          {icon && <img class="proxmox-icon" src={icon} alt={title} />}
-        </slot>
-      </div>
-      <slot />
-    </div>
-  )}
 </div>

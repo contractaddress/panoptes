@@ -1,0 +1,49 @@
+/* Hero Card Specific Styles */
+.hero-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hero Label */
+.hero-label {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 0px !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-label.card-label {
+  width: 120;
+}
+
+/* Hero Logo */
+.hero-logo {
+  width: auto;
+  height: 80px;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.proxmox-icon {
+  width: 100%;
+  height: 100%;
+  max-width: 120px;
+  max-height: 80px;
+  object-fit: contain;
+}
+
+/* Hero Info */
+.hero-info {
+  margin-bottom: 0.6rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  text-align: center;
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}

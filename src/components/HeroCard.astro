@@ -24,12 +24,12 @@ const { title, status = 'online', icon = null, content } = Astro.props;
 
     {content && (
       <>
-        <div class="info-card status-text">
+        <div class="card-info status-text">
           Status: <span class={`status-value status-${content.status}`}>{content.status}</span>
         </div>
 
         {content.location && (
-          <div class="info-card location-info">
+          <div class="card-info location-info">
             Location: <a
               href={content.location.url}
               class="dashboard-link"
@@ -42,7 +42,7 @@ const { title, status = 'online', icon = null, content } = Astro.props;
         )}
 
         {content.uptime && (
-          <div class="info-card uptime-info">
+          <div class="card-info uptime-info">
             Uptime: {content.uptime}
           </div>
         )}

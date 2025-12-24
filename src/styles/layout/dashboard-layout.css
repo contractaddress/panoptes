@@ -16,9 +16,9 @@
   position: relative;
 
   /* Enforce exact aspect ratio */
-  aspect-ratio: 1280 / 400;
-  min-width: 1280px;
-  min-height: 400px;
+  aspect-ratio: 1152 / 360;
+  min-width: 1152px;
+  min-height: 360px;
 }
 
 /* Acrylic noise texture for realism */

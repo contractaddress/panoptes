@@ -1,0 +1,48 @@
+/* Dashboard Card Styles */
+
+/* Card Base Styles */
+.dashboard-card {
+  background: #5a5a5a33;
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  width: 259px;
+  height: 150px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Acrylic card noise texture */
+.dashboard-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.1) 1px, transparent 0);
+  background-size: 15px 15px;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Card Label */
+.card-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: auto;
+  text-align: center;
+}
