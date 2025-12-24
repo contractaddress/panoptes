@@ -17,7 +17,7 @@
 }
 
 .small-card-label {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   text-align: center;
@@ -26,8 +26,8 @@
   align-self: center;
   white-space: normal;
   word-break: break-word;
-  margin-left: 30px;
-  margin-right: 30px;
+  margin-left: 25px;
+  margin-right: 25px;
 }
 
 .small-tile-card .tile-icon {
@@ -37,15 +37,15 @@
 }
 
 .tile-icon.Pi-hole {
-  width: 120px;
-  height: 105px;
+  width: 105px;
+  height: 90px;
 }
 
 /* Small Tile Icon */
 .tile-icon {
-  width: 90px;
-  height: 90px;
-  margin: 0.5rem auto;
+  width: 75px;
+  height: 75px;
+  margin: 0.4rem auto;
   display: flex;
   justify-content: center;
   align-items: center;
