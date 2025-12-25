@@ -9,15 +9,15 @@ export const dashboardConfig = {
       status: 'online',
       location: {
         text: 'proxmox.local',
-        url: 'https://proxmox.local:8006'
+        url: 'http://proxmox.local:port'
       },
       uptime: 'placeholder'
     }
   },
 
   smallTiles: [
-    { title: 'OpenWRT', status: 'online', icon: '/icons/openwrt.svg', location: { text: 'OpenWRT', url: 'https://openwrt.local' } },
-    { title: 'Pi-hole', status: 'online', icon: '/icons/pi-hole.svg', location: { text: 'Pi-hole', url: 'https://pihole.local' } },
+    { title: 'OpenWRT', status: 'online', icon: '/icons/openwrt.svg', location: { text: 'OpenWRT', url: 'http://openwrt.local' } },
+    { title: 'Pi-hole', status: 'online', icon: '/icons/pi-hole.svg', location: { text: 'Pi-hole', url: 'http://pihole.local' } },
     { title: 'Immich', status: 'online', icon: '/icons/immich.svg', location: { text: 'Immich', url: 'https://immich.local' } },
     { title: 'Wireguard', status: 'online', icon: '/icons/wireguard.svg', location: { text: 'Wireguard', url: 'https://wireguard.local' } }
   ],

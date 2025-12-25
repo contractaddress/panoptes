@@ -1,4 +1,5 @@
-/** VIBE CODED API UNTIL I'VE LEARNED HTTP REQUESTS AND MAPPING IN JS :D
+/** SEMI-VIBE CODED API UNTIL I'VE LEARNED HTTP REQUESTS AND MAPPING IN JS :D
+ *
  * Service Status Monitor
  *
  * A modular system for monitoring the online status of homelab services.
@@ -78,14 +79,21 @@ export function extractServicesFromConfig(config) {
 /**
  * Check if a single service is online
  * Simple check: 200 = online, anything else = offline
+ * For Proxmox, uses a simple connectivity check instead of HTTP
  *
  * @param {string} url - The URL to check
+ * @param {string} title - The service title for special handling
  * @returns {Promise<string>} Status: 'online' or 'offline'
  */
-export async function checkServiceStatus(url) {
+export async function checkServiceStatus(url, title = '') {
   // If feature flag is disabled, return online
   if (!ENABLE_STATUS_CHECKS) {
     return 'online';
+  }
+
+  // Special handling for Proxmox - use connectivity check instead of HTTP
+  if (title.toLowerCase().includes('proxmox')) {
+    return checkProxmoxConnectivity(url);
   }
 
   try {
@@ -116,7 +124,7 @@ export async function checkServiceStatus(url) {
  */
 export async function fetchAllStatuses(services) {
   const statusPromises = services.map(async (service) => {
-    const status = await checkServiceStatus(service.url);
+    const status = await checkServiceStatus(service.url, service.title);
     return {
       id: service.id,
       title: service.title,
@@ -269,4 +277,54 @@ export function getMonitorSummary() {
     isRunning: intervalId !== null,
     lastChecked: statuses[0]?.lastChecked || null
   };
+}
+
+/**
+ * proxmox was being a pain to check connectivity
+ * so i gave it its own status checker
+ *
+ * @param {string} url - The Proxmox URL to check
+ * @returns {Promise<string>} Status: 'online' or 'offline'
+ */
+async function checkProxmoxConnectivity(url) {
+  const controller = new AbortController();
+  let timeoutId = null;
+  
+  try {
+    timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+
+    // Extract just the hostname and port for connectivity check
+    let urlObj;
+    try {
+      urlObj = new URL(url);
+    } catch (e) {
+      console.error(`[Proxmox Check] Invalid URL: ${url}`);
+      return 'offline';
+    }
+
+    // Try to establish a connection by fetching a minimal endpoint
+    // Use no-cors mode to avoid CORS issues
+    // We don't care about the response, just whether the connection succeeds
+    const testUrl = `${urlObj.protocol}//${urlObj.hostname}:${urlObj.port || (urlObj.protocol === 'https:' ? '443' : '80')}/`;
+    
+    const response = await fetch(testUrl, {
+      method: 'HEAD', // HEAD is lighter than GET
+      signal: controller.signal,
+      mode: 'no-cors', // Avoid CORS issues
+      cache: 'no-cache'
+    });
+
+    clearTimeout(timeoutId);
+    
+    // If we get here, the connection was successful
+    console.log(`[Proxmox Check] Connection successful to ${urlObj.hostname}:${urlObj.port || '8006'}`);
+    return 'online';
+    
+  } catch (error) {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    console.error(`[Proxmox Check] Connection failed to ${url}: ${error.message}`);
+    return 'offline';
+  }
 }
