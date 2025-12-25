@@ -7,11 +7,11 @@
   max-height: 340px;
   padding: 0.9rem;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: #30303024;
-  backdrop-filter: blur(8px) saturate(10%);
-  -webkit-backdrop-filter: blur(8px) saturate(10%);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: #473a3f57;
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(3px) saturate(100%);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   position: relative;
   bottom: 15px;
@@ -27,7 +27,7 @@
   right: 0;
   bottom: 0;
   background-image:
-    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.08) 1px, transparent 0);
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.28) 1px, transparent 0);
   background-size: 20px 20px;
   opacity: 0.3;
   pointer-events: none;

@@ -14,24 +14,26 @@ export const dashboardConfig = {
       uptime: 'placeholder'
     }
   },
+  
   smallTiles: [
     { title: 'OpenWRT', status: 'online', icon: '/icons/openwrt.svg'},
     { title: 'Pi-hole', status: 'online', icon: '/icons/pi-hole.svg'},
-    { title: 'Immich', status: 'online', icon: '/icons/immich.svg'},
+    { title: 'Immich', status: 'offline', icon: '/icons/immich.svg'},
     { title: 'Wireguard', status: 'online', icon: '/icons/wireguard.svg'}
   ],
+
   servicesCard: {
     title: 'Services',
     logos: [
-      { name: 'Docker', icon: '/icons/services/docker.svg' },
-      { name: 'Service 2', icon: '/icons/services/' },
-      { name: 'Service 3', icon: '/icons/services/' },
-      { name: 'Service 4', icon: '/icons/services/' },
-      { name: 'Service 5', icon: '/icons/services/' },
-      { name: 'Service 6', icon: '/icons/services/' },
-      { name: 'Service 7', icon: '/icons/services/' },
-      { name: 'Service 8', icon: '/icons/services/' },
-      { name: 'Service 9', icon: '/icons/services/' }
+      { name: 'Docker', status: 'online', icon: '/icons/services/docker.svg' },
+      { name: 'Service 2', status: 'online', icon: '/icons/services/' },
+      { name: 'Service 3', status: 'online', icon: '/icons/services/' },
+      { name: 'Service 4', status: 'online', icon: '/icons/services/' },
+      { name: 'Service 5', status: 'online', icon: '/icons/services/' },
+      { name: 'Service 6', status: 'online', icon: '/icons/services/' },
+      { name: 'Service 7', status: 'online', icon: '/icons/services/' },
+      { name: 'Service 8', status: 'online', icon: '/icons/services/' },
+      { name: 'Service 9', status: 'online', icon: '/icons/services/' }
     ]
   }
 };

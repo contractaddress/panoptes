@@ -9,7 +9,7 @@ const { title, status = 'online', icon = null, isHero = false } = Astro.props;
   <div class={`${isHero ? 'card-label hero-label' : 'small-card-label'}`}>{title}</div>
 
   {!isHero && icon && (
-  <div class={`tile-icon ${title}`}>
+  <div class={`tile-icon ${title}-icon`}>
       <img src={icon} alt={title} />
     </div>
   )}

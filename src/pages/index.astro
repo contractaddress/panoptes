@@ -8,6 +8,7 @@
 -->
 
 ---
+import Silk from '../components/Silk.jsx';
 import DashboardLayout from '../layouts/DashboardLayout.astro';
 import BeamsBackground from '../components/BeamsBackground.jsx';
 import { dashboardConfig } from '../config/dashboard.config.js';
@@ -23,7 +24,16 @@ import '../styles/index.css';
     <title>Homelab Dashboard</title>
   </head>
   <body>
-    <BeamsBackground client:load />
+    <div class="silk-background">
+      <Silk
+        speed={5}
+        scale={1}
+        color="#7B7481"
+        noiseIntensity={1.5}
+        rotation={0}
+        client:load
+      />
+    </div>
     <DashboardLayout config={dashboardConfig} />
   </body>
 </html>
