@@ -10,6 +10,7 @@
 @import './components/cards/hero-card.css';
 @import './components/cards/small-tile-card.css';
 @import './components/cards/services-card.css';
+@import './components/image-status.css';
 
 /* Global Styles */
 html, body {

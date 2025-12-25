@@ -10,3 +10,14 @@ export function getStatusTooltip(status) {
       return 'Unknown status';
   }
 }
+
+export function getImageStyleClass(status) {
+  switch(status) {
+    case 'offline':
+      return 'offline-image';
+    case 'warning':
+      return 'warning-image';
+    default:
+      return '';
+  }
+}

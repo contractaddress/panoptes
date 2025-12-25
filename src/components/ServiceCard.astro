@@ -1,5 +1,5 @@
 ---
-import { getStatusTooltip } from '../utils/statusTooltip.js';
+import { getStatusTooltip, getImageStyleClass } from '../utils/statusTooltip.js';
 
 const { title, status = 'online', logos = [] } = Astro.props;
 ---
@@ -10,7 +10,12 @@ const { title, status = 'online', logos = [] } = Astro.props;
   <div class="logo-grid">
     {logos.map((logo) => (
       <div class="logo-box">
-        {logo.icon && <img src={logo.icon} alt={logo.name} title={logo.name} />}
+        {logo.icon && <img 
+          src={logo.icon} 
+          alt={logo.name} 
+          title={logo.name} 
+          class={getImageStyleClass(logo.status || 'online')}
+        />}
       </div>
     ))}
   </div>

@@ -1,5 +1,5 @@
 ---
-import { getStatusTooltip } from '../utils/statusTooltip.js';
+import { getStatusTooltip, getImageStyleClass } from '../utils/statusTooltip.js';
 
 const { title, status = 'online', icon = null, isHero = false } = Astro.props;
 ---
@@ -10,7 +10,7 @@ const { title, status = 'online', icon = null, isHero = false } = Astro.props;
 
   {!isHero && icon && (
   <div class={`tile-icon ${title}-icon`}>
-      <img src={icon} alt={title} />
+      <img src={icon} alt={title} class={getImageStyleClass(status)} />
     </div>
   )}
 </div>
