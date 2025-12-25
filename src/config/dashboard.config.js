@@ -16,7 +16,7 @@ export const dashboardConfig = {
   },
 
   smallTiles: [
-    { title: 'OpenWRT', status: 'online', icon: '/icons/openwrt.svg', location: { text: 'OpenWRT', url: 'http://192.168.2.24:8011' } },
+    { title: 'OpenWRT', status: 'online', icon: '/icons/openwrt.svg', location: { text: 'OpenWRT', url: 'https://openwrt.local' } },
     { title: 'Pi-hole', status: 'online', icon: '/icons/pi-hole.svg', location: { text: 'Pi-hole', url: 'https://pihole.local' } },
     { title: 'Immich', status: 'online', icon: '/icons/immich.svg', location: { text: 'Immich', url: 'https://immich.local' } },
     { title: 'Wireguard', status: 'online', icon: '/icons/wireguard.svg', location: { text: 'Wireguard', url: 'https://wireguard.local' } }

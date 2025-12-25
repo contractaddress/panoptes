@@ -25,30 +25,6 @@ export async function fetchServiceStatuses(format = 'mapped') {
   return await response.json();
 }
 
-/**
- * Trigger a manual refresh of service statuses
- *
- * @returns {Promise<Object>} Updated status data
- */
-export async function refreshServiceStatuses() {
-  try {
-    const response = await fetch('/api/status/refresh', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to refresh statuses: ${response.statusText}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('[Status Client] Error refreshing statuses:', error);
-    throw error;
-  }
-}
 
 /**
  * Get status for a specific service by title

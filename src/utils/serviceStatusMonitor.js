@@ -10,7 +10,7 @@
 // FEATURE FLAG: Enable/Disable Runtime Status Checks
 // ============================================================================
 // Set to false to disable all network checks and default all services to "online"
-export const ENABLE_STATUS_CHECKS = false;
+export const ENABLE_STATUS_CHECKS = true;
 
 // ============================================================================
 // Configuration
