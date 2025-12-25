@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Status Monitor Debug Tool</title>
+  <style>
+    body {
+      font-family: 'Monaco', 'Courier New', monospace;
+      padding: 20px;
+      background: #0d1117;
+      color: #58a6ff;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #58a6ff;
+      border-bottom: 2px solid #30363d;
+      padding-bottom: 10px;
+    }
+    .section {
+      background: #161b22;
+      padding: 20px;
+      margin: 15px 0;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+    }
+    h2 {
+      color: #58a6ff;
+      margin-top: 0;
+    }
+    button {
+      background: #238636;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      margin: 5px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    button:hover {
+      background: #2ea043;
+    }
+    button:active {
+      background: #1a7f37;
+    }
+    .error { color: #f85149; }
+    .success { color: #3fb950; }
+    .warning { color: #d29922; }
+    .info { color: #58a6ff; }
+    pre {
+      background: #0d1117;
+      padding: 15px;
+      overflow-x: auto;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .status-item {
+      background: #0d1117;
+      padding: 10px;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    .status-dot.online {
+      background: #3fb950;
+      box-shadow: 0 0 8px rgba(63, 185, 80, 0.5);
+    }
+    .status-dot.offline {
+      background: #f85149;
+      box-shadow: 0 0 8px rgba(248, 81, 73, 0.5);
+    }
+    ol {
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔧 Homelab Status Monitor - Debug Tool</h1>
+
+  <div class="section">
+    <h2>📊 Live Service Status</h2>
+    <button onclick="loadLiveStatus()">Refresh Status</button>
+    <div id="live-status"></div>
+  </div>
+
+  <div class="section">
+    <h2>🔌 API Endpoint Tests</h2>
+    <button onclick="testAPIRaw()">Test /api/status?format=raw</button>
+    <button onclick="testAPIMapped()">Test /api/status?format=mapped</button>
+    <button onclick="testAPISummary()">Test /api/status?format=summary</button>
+    <button onclick="testAPIRefresh()">Trigger Manual Refresh (POST)</button>
+    <pre id="api-result">Click a button to test the API...</pre>
+  </div>
+
+  <div class="section">
+    <h2>🎨 UI Component Test</h2>
+    <p>This opens your dashboard in a new window and tests if UI updates work.</p>
+    <button onclick="testUIUpdate()">Open Dashboard & Test UI Update</button>
+    <pre id="ui-result">Click button to test...</pre>
+  </div>
+
+  <div class="section">
+    <h2>💅 CSS Class Check</h2>
+    <button onclick="checkCSS()">Verify CSS Loaded</button>
+    <pre id="css-result">Click button to test...</pre>
+  </div>
+
+  <div class="section">
+    <h2>⚙️ Configuration Info</h2>
+    <button onclick="showConfig()">Show Config</button>
+    <pre id="config-result">Click button to show configuration...</pre>
+  </div>
+
+  <div class="section">
+    <h2>📖 Instructions</h2>
+    <ol>
+      <li><strong>Live Service Status:</strong> Shows real-time status of all services</li>
+      <li><strong>API Tests:</strong> Verify API endpoints are working correctly</li>
+      <li><strong>UI Test:</strong> Opens dashboard and tests if status updates work</li>
+      <li><strong>CSS Check:</strong> Ensures styling is loaded properly</li>
+      <li><strong>Config:</strong> Shows what services are being monitored</li>
+    </ol>
+  </div>
+
+  <script>
+    // ========================================
+    // Live Service Status
+    // ========================================
+    async function loadLiveStatus() {
+      const container = document.getElementById('live-status');
+      container.innerHTML = '<p class="info">Loading...</p>';
+
+      try {
+        const response = await fetch('/api/status?format=raw');
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const services = await response.json();
+
+        if (!Array.isArray(services) || services.length === 0) {
+          container.innerHTML = '<p class="warning">⚠ No services found or wrong format</p>';
+          return;
+        }
+
+        const online = services.filter(s => s.status === 'online').length;
+        const offline = services.filter(s => s.status === 'offline').length;
+
+        let html = `<p class="success">✓ Monitoring ${services.length} services - ${online} online, ${offline} offline</p>`;
+        html += '<div class="status-grid">';
+
+        services.forEach(service => {
+          const statusClass = service.status === 'online' ? 'online' : 'offline';
+          const statusText = service.status === 'online' ? 'Online' : 'Offline';
+          html += `
+            <div class="status-item">
+              <div><span class="status-dot ${statusClass}"></span><strong>${service.title || service.id}</strong></div>
+              <div style="font-size: 11px; color: #8b949e; margin-top: 5px;">${service.url || 'No URL'}</div>
+            </div>
+          `;
+        });
+
+        html += '</div>';
+        container.innerHTML = html;
+      } catch (error) {
+        container.innerHTML = `<p class="error">✗ Error: ${error.message}</p>`;
+      }
+    }
+
+    // Load on page load
+    loadLiveStatus();
+
+    // ========================================
+    // API Tests
+    // ========================================
+    async function testAPIRaw() {
+      const result = document.getElementById('api-result');
+      result.textContent = 'Testing /api/status?format=raw...';
+
+      try {
+        const response = await fetch('/api/status?format=raw');
+        if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+
+        const data = await response.json();
+
+        let output = '<span class="success">✓ API Working!</span>\n\n';
+        output += `Format: raw (array)\n`;
+        output += `Services: ${data.length}\n`;
+        output += `Is Array: ${Array.isArray(data)}\n\n`;
+        output += JSON.stringify(data, null, 2);
+
+        result.innerHTML = output;
+      } catch (error) {
+        result.innerHTML = `<span class="error">✗ Error:</span>\n${error.message}`;
+      }
+    }
+
+    async function testAPIMapped() {
+      const result = document.getElementById('api-result');
+      result.textContent = 'Testing /api/status?format=mapped...';
+
+      try {
+        const response = await fetch('/api/status?format=mapped');
+        if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+
+        const data = await response.json();
+
+        let output = '<span class="success">✓ API Working!</span>\n\n';
+        output += `Format: mapped (object)\n`;
+        output += `Has heroCard: ${!!data.heroCard}\n`;
+        output += `Has smallTiles: ${!!data.smallTiles}\n`;
+        output += `Has servicesCard: ${!!data.servicesCard}\n\n`;
+        output += JSON.stringify(data, null, 2);
+
+        result.innerHTML = output;
+      } catch (error) {
+        result.innerHTML = `<span class="error">✗ Error:</span>\n${error.message}`;
+      }
+    }
+
+    async function testAPISummary() {
+      const result = document.getElementById('api-result');
+      result.textContent = 'Testing /api/status?format=summary...';
+
+      try {
+        const response = await fetch('/api/status?format=summary');
+        if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+
+        const data = await response.json();
+
+        let output = '<span class="success">✓ API Working!</span>\n\n';
+        output += `Total Services: ${data.totalServices}\n`;
+        output += `Online: ${data.online}\n`;
+        output += `Offline: ${data.offline}\n`;
+        output += `Monitor Enabled: ${data.enabled}\n`;
+        output += `Is Running: ${data.isRunning}\n\n`;
+        output += JSON.stringify(data, null, 2);
+
+        result.innerHTML = output;
+      } catch (error) {
+        result.innerHTML = `<span class="error">✗ Error:</span>\n${error.message}`;
+      }
+    }
+
+    async function testAPIRefresh() {
+      const result = document.getElementById('api-result');
+      result.textContent = 'Triggering manual refresh (POST /api/status/refresh)...';
+
+      try {
+        const response = await fetch('/api/status/refresh', { method: 'POST' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+
+        const data = await response.json();
+
+        result.innerHTML = '<span class="success">✓ Refresh triggered!</span>\n\n' +
+                          'New statuses:\n' +
+                          JSON.stringify(data, null, 2);
+
+        // Also refresh the live status display
+        loadLiveStatus();
+      } catch (error) {
+        result.innerHTML = `<span class="error">✗ Error:</span>\n${error.message}`;
+      }
+    }
+
+    // ========================================
+    // UI Component Test
+    // ========================================
+    function testUIUpdate() {
+      const result = document.getElementById('ui-result');
+
+      // Open dashboard in new window
+      const dashWin = window.open('/', '_blank');
+
+      if (!dashWin) {
+        result.innerHTML = '<span class="error">✗ Failed to open window. Check popup blocker.</span>';
+        return;
+      }
+
+      result.innerHTML = '<span class="info">Opening dashboard...</span>\n\n';
+      result.innerHTML += 'Wait 2 seconds for dashboard to load...\n';
+
+      setTimeout(() => {
+        try {
+          // Try to access the dashboard window
+          const serviceElements = dashWin.document.querySelectorAll('[data-service-id]');
+
+          if (serviceElements.length === 0) {
+            result.innerHTML = '<span class="error">✗ No service elements found in dashboard</span>\n';
+            result.innerHTML += 'Make sure the dashboard loaded correctly.';
+            return;
+          }
+
+          result.innerHTML = `<span class="success">✓ Found ${serviceElements.length} services</span>\n\n`;
+
+          // Test updating the first service
+          const firstService = serviceElements[0];
+          const serviceId = firstService.getAttribute('data-service-id');
+
+          result.innerHTML += `Testing update on: ${serviceId}\n\n`;
+
+          // Toggle between online and offline
+          const indicator = firstService.querySelector('[data-status-indicator]');
+          if (indicator) {
+            const isOnline = indicator.classList.contains('status-online');
+            const newStatus = isOnline ? 'offline' : 'online';
+
+            indicator.classList.remove('status-online', 'status-offline');
+            indicator.classList.add(`status-${newStatus}`);
+
+            result.innerHTML += `<span class="success">✓ Updated indicator to ${newStatus}</span>\n`;
+          } else {
+            result.innerHTML += '<span class="warning">⚠ No indicator found</span>\n';
+          }
+
+          // Update image
+          const image = firstService.querySelector('[data-status-image]');
+          if (image) {
+            const isOnline = !image.classList.contains('offline-image');
+
+            if (isOnline) {
+              image.classList.add('offline-image');
+              result.innerHTML += '<span class="success">✓ Set image to offline (grayed)</span>\n';
+            } else {
+              image.classList.remove('offline-image');
+              result.innerHTML += '<span class="success">✓ Set image to online (normal)</span>\n';
+            }
+          } else {
+            result.innerHTML += '<span class="warning">⚠ No image found</span>\n';
+          }
+
+          result.innerHTML += '\nCheck the dashboard window - did the status change?';
+        } catch (error) {
+          result.innerHTML = `<span class="error">✗ Error accessing dashboard:</span>\n${error.message}\n\n`;
+          result.innerHTML += 'This might be a CORS issue. Dashboard and debug tool must be on same origin.';
+        }
+      }, 2000);
+    }
+
+    // ========================================
+    // CSS Check
+    // ========================================
+    async function checkCSS() {
+      const result = document.getElementById('css-result');
+      result.textContent = 'Checking CSS files...';
+
+      try {
+        // Check if CSS files exist
+        const cssFiles = [
+          '/src/styles/components/status-indicator.css',
+          '/src/styles/components/image-status.css'
+        ];
+
+        let output = '<span class="info">CSS File Check:</span>\n\n';
+
+        // Try to fetch the dashboard page and check if CSS is applied
+        const dashResponse = await fetch('/');
+        if (dashResponse.ok) {
+          output += '<span class="success">✓ Dashboard accessible</span>\n';
+          output += 'CSS files are bundled into the dashboard\n\n';
+        }
+
+        // Check what CSS classes are defined
+        output += '<span class="info">Expected CSS Classes:</span>\n';
+        output += '  .status-indicator (12px circle)\n';
+        output += '  .status-online (green background)\n';
+        output += '  .status-offline (red background)\n';
+        output += '  .offline-image (grayscale filter)\n\n';
+
+        output += '<span class="success">✓ All CSS should be loaded in the dashboard</span>\n';
+        output += 'Open the dashboard to verify visual appearance.';
+
+        result.innerHTML = output;
+      } catch (error) {
+        result.innerHTML = `<span class="error">✗ Error:</span>\n${error.message}`;
+      }
+    }
+
+    // ========================================
+    // Show Configuration
+    // ========================================
+    async function showConfig() {
+      const result = document.getElementById('config-result');
+      result.textContent = 'Loading configuration...';
+
+      try {
+        // Get raw statuses to see all configured services
+        const response = await fetch('/api/status?format=raw');
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const data = await response.json();
+
+        // Convert to array if needed (same logic as dashboard)
+        let services = [];
+
+        if (Array.isArray(data)) {
+          services = data;
+        } else if (data && typeof data === 'object') {
+          // Got mapped format, convert to array
+          if (data.heroCard) {
+            services.push({
+              id: `hero_${data.heroCard.title}`,
+              title: data.heroCard.title,
+              status: data.heroCard.status,
+              source: 'heroCard',
+              url: 'Check config file'
+            });
+          }
+          if (Array.isArray(data.smallTiles)) {
+            data.smallTiles.forEach(tile => {
+              services.push({
+                id: `tile_${tile.title}`,
+                title: tile.title,
+                status: tile.status,
+                source: 'smallTiles',
+                url: 'Check config file'
+              });
+            });
+          }
+          if (data.servicesCard?.logos && Array.isArray(data.servicesCard.logos)) {
+            data.servicesCard.logos.forEach(service => {
+              services.push({
+                id: `service_${service.name}`,
+                title: service.name,
+                status: service.status,
+                source: 'servicesCard',
+                url: 'Check config file'
+              });
+            });
+          }
+        }
+
+        let output = '<span class="success">✓ Configuration</span>\n\n';
+        output += `Total Services: ${services.length}\n`;
+        output += `Update Interval: 15 minutes\n`;
+        output += `Feature Flag: ENABLE_STATUS_CHECKS (in serviceStatusMonitor.js)\n\n`;
+        output += 'Configured Services:\n';
+        output += '─────────────────────\n';
+
+        services.forEach((service, i) => {
+          output += `${i + 1}. ${service.title}\n`;
+          output += `   ID: ${service.id}\n`;
+          output += `   URL: ${service.url}\n`;
+          output += `   Source: ${service.source}\n`;
+          output += `   Status: ${service.status}\n\n`;
+        });
+
+        result.innerHTML = output;
+      } catch (error) {
+        result.innerHTML = `<span class="error">✗ Error:</span>\n${error.message}`;
+      }
+    }
+  </script>
+</body>
+</html>

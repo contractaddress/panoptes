@@ -64,7 +64,13 @@
 }
 
 .status-offline.status-value {
-  color: #ef4444;
+  color: #470606;
+  margin-left: 10px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  border-radius: 9px;
 }
 
 /* Location and Uptime Info */

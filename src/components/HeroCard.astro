@@ -11,21 +11,22 @@
 import { getStatusTooltip, getImageStyleClass } from '../utils/statusTooltip.js';
 
 const { title, status = 'online', icon = null, content } = Astro.props;
+const serviceId = `hero_${title}`;
 ---
 
-<div class="dashboard-card hero-card">
-  <div class={`status-indicator status-${status}`} title={getStatusTooltip(status)}></div>
+<div class="dashboard-card hero-card" data-service-id={serviceId}>
+  <div class={`status-indicator status-${status}`} title={getStatusTooltip(status)} data-status-indicator></div>
   <div class="card-label hero-label">{title}</div>
 
   <div class="hero-info">
     <div class="hero-logo">
-      {icon && <img class={`proxmox-icon ${getImageStyleClass(status)}`} src={icon} alt={title} />}
+      {icon && <img class={`proxmox-icon ${getImageStyleClass(status)}`} src={icon} alt={title} data-status-image />}
     </div>
 
     {content && (
       <>
         <div class="card-info status-text">
-          Status: <span class={`status-value status-${content.status}`}>{content.status}</span>
+          Status: <span class={`status-value status-${content.status}`} data-status-text>{content.status}</span>
         </div>
 
         {content.location && (

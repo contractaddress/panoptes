@@ -8,15 +8,19 @@ const { title, status = 'online', logos = [] } = Astro.props;
   <div class={`status-indicator status-${status}`} title={getStatusTooltip(status)}></div>
   <div class="card-label hero-label">{title}</div>
   <div class="logo-grid">
-    {logos.map((logo) => (
-      <div class="logo-box">
-        {logo.icon && <img 
-          src={logo.icon} 
-          alt={logo.name} 
-          title={logo.name} 
-          class={getImageStyleClass(logo.status || 'online')}
-        />}
-      </div>
-    ))}
+    {logos.map((logo) => {
+      const serviceId = `service_${logo.name}`;
+      return (
+        <div class="logo-box" data-service-id={serviceId}>
+          {logo.icon && <img
+            src={logo.icon}
+            alt={logo.name}
+            title={logo.name}
+            class={getImageStyleClass(logo.status || 'online')}
+            data-status-image
+          />}
+        </div>
+      );
+    })}
   </div>
 </div>

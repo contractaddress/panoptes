@@ -5,6 +5,7 @@
   - 2x4 grid of small tiles on the right
   - Glassmorphism styling
   - Responsive design
+  - Real-time service status monitoring
 -->
 
 ---
@@ -35,5 +36,121 @@ import '../styles/index.css';
       />
     </div>
     <DashboardLayout config={dashboardConfig} />
+
+    <script>
+      import { fetchServiceStatuses } from '../utils/statusClient.js';
+      import { getStatusTooltip, getImageStyleClass } from '../utils/statusTooltip.js';
+
+      // Status update interval (15 minutes)
+      const UPDATE_INTERVAL = 15 * 60 * 1000;
+
+      /**
+       * Update UI elements for a specific service
+       */
+      function updateServiceUI(serviceId, status) {
+        const serviceElement = document.querySelector(`[data-service-id="${serviceId}"]`);
+        if (!serviceElement) return;
+
+        // Update status indicator (colored dot)
+        const statusIndicator = serviceElement.querySelector('[data-status-indicator]');
+        if (statusIndicator) {
+          statusIndicator.classList.remove('status-online', 'status-offline');
+          statusIndicator.classList.add(`status-${status}`);
+          statusIndicator.setAttribute('title', getStatusTooltip(status));
+        }
+
+        // Update status text (hero card)
+        const statusText = serviceElement.querySelector('[data-status-text]');
+        if (statusText) {
+          statusText.textContent = status;
+          statusText.classList.remove('status-online', 'status-offline');
+          statusText.classList.add(`status-${status}`);
+        }
+
+        // Update status image (gray out if offline)
+        const statusImage = serviceElement.querySelector('[data-status-image]');
+        if (statusImage) {
+          statusImage.classList.remove('offline-image');
+          const imageClass = getImageStyleClass(status);
+          if (imageClass) {
+            statusImage.classList.add(imageClass);
+          }
+        }
+      }
+
+      /**
+       * Fetch and apply status updates to all services
+       */
+      async function updateAllStatuses() {
+        try {
+          const data = await fetchServiceStatuses('raw');
+          let servicesArray = [];
+
+          // Handle array or mapped format
+          if (Array.isArray(data)) {
+            servicesArray = data;
+          } else if (data && typeof data === 'object') {
+            // Convert mapped format to array
+            if (data.heroCard) {
+              servicesArray.push({
+                id: `hero_${data.heroCard.title}`,
+                status: data.heroCard.status
+              });
+            }
+            if (Array.isArray(data.smallTiles)) {
+              data.smallTiles.forEach(tile => {
+                servicesArray.push({
+                  id: `tile_${tile.title}`,
+                  status: tile.status
+                });
+              });
+            }
+            if (data.servicesCard?.logos && Array.isArray(data.servicesCard.logos)) {
+              data.servicesCard.logos.forEach(service => {
+                servicesArray.push({
+                  id: `service_${service.name}`,
+                  status: service.status
+                });
+              });
+            }
+          } else {
+            console.error('[Dashboard] Unexpected data format');
+            return;
+          }
+
+          // Update UI for each service
+          servicesArray.forEach(service => {
+            updateServiceUI(service.id, service.status);
+          });
+        } catch (error) {
+          console.error('[Dashboard] Failed to update statuses:', error);
+        }
+      }
+
+      /**
+       * Initialize status monitoring
+       */
+      async function initStatusMonitoring() {
+        // Initial status update
+        await updateAllStatuses();
+
+        // Set up periodic updates
+        setInterval(updateAllStatuses, UPDATE_INTERVAL);
+      }
+
+      // Start monitoring when page loads
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initStatusMonitoring);
+      } else {
+        initStatusMonitoring();
+      }
+
+      // Refresh when tab becomes visible
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+          updateAllStatuses();
+        }
+      });
+    </script>
   </body>
 </html>

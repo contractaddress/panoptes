@@ -2,15 +2,16 @@
 import { getStatusTooltip, getImageStyleClass } from '../utils/statusTooltip.js';
 
 const { title, status = 'online', icon = null, isHero = false } = Astro.props;
+const serviceId = `tile_${title}`;
 ---
 
-<div class={`dashboard-card ${isHero ? 'hero-card' : 'small-tile-card'}`}>
-  <div class={`status-indicator status-${status}`} title={getStatusTooltip(status)}></div>
+<div class={`dashboard-card ${isHero ? 'hero-card' : 'small-tile-card'}`} data-service-id={serviceId}>
+  <div class={`status-indicator status-${status}`} title={getStatusTooltip(status)} data-status-indicator></div>
   <div class={`${isHero ? 'card-label hero-label' : 'small-card-label'}`}>{title}</div>
 
   {!isHero && icon && (
   <div class={`tile-icon ${title}-icon`}>
-      <img src={icon} alt={title} class={getImageStyleClass(status)} />
+      <img src={icon} alt={title} class={getImageStyleClass(status)} data-status-image />
     </div>
   )}
 </div>
