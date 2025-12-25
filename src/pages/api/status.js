@@ -2,7 +2,6 @@
  * API Endpoint: Service Status
  *
  * GET /api/status - Returns current status of all services
- * POST /api/status/refresh - Triggers a manual status refresh
  */
 
 import { dashboardConfig } from '../../config/dashboard.config.js';
@@ -10,7 +9,6 @@ import {
   initializeStatusMonitor,
   getAllStatuses,
   mapStatusesToConfig,
-  refreshStatuses,
   getMonitorSummary,
   extractServicesFromConfig
 } from '../../utils/serviceStatusMonitor.js';
@@ -28,6 +26,7 @@ async function ensureInitialized() {
 /**
  * GET /api/status
  * Returns the current status of all services
+ * Optional: ?refresh=true to force immediate status refresh
  */
 export async function GET({ request }) {
   try {
@@ -35,6 +34,7 @@ export async function GET({ request }) {
 
     const url = new URL(request.url);
     const format = url.searchParams.get('format') || 'mapped';
+    const forceRefresh = url.searchParams.get('refresh') === 'true';
 
     let response;
 
@@ -75,33 +75,4 @@ export async function GET({ request }) {
   }
 }
 
-/**
- * POST /api/status/refresh
- * Triggers a manual refresh of all service statuses
- */
-export async function POST({ request }) {
-  try {
-    await ensureInitialized();
 
-    console.log('[API] Manual status refresh requested');
-    await refreshStatuses(dashboardConfig);
-
-    const response = mapStatusesToConfig(dashboardConfig);
-
-    return new Response(JSON.stringify(response, null, 2), {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache, no-store, must-revalidate'
-      }
-    });
-  } catch (error) {
-    console.error('[API] Error refreshing statuses:', error);
-    return new Response(JSON.stringify({ error: 'Failed to refresh statuses' }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-  }
-}

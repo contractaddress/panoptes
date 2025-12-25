@@ -103,7 +103,7 @@
     <button onclick="testAPIRaw()">Test /api/status?format=raw</button>
     <button onclick="testAPIMapped()">Test /api/status?format=mapped</button>
     <button onclick="testAPISummary()">Test /api/status?format=summary</button>
-    <button onclick="testAPIRefresh()">Trigger Manual Refresh (POST)</button>
+    <button onclick="testAPIRefresh()">Trigger Manual Refresh (GET with refresh)</button>
     <pre id="api-result">Click a button to test the API...</pre>
   </div>
 
@@ -257,10 +257,10 @@
 
     async function testAPIRefresh() {
       const result = document.getElementById('api-result');
-      result.textContent = 'Triggering manual refresh (POST /api/status/refresh)...';
+      result.textContent = 'Triggering manual refresh (GET /api/status?refresh=true)...';
 
       try {
-        const response = await fetch('/api/status/refresh', { method: 'POST' });
+        const response = await fetch('/api/status?refresh=true', { method: 'GET' });
         if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
 
         const data = await response.json();

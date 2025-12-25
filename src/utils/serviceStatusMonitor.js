@@ -1,4 +1,4 @@
-/**
+/** VIBE CODED API UNTIL I'VE LEARNED HTTP REQUESTS AND MAPPING IN JS :D
  * Service Status Monitor
  *
  * A modular system for monitoring the online status of homelab services.
@@ -247,17 +247,6 @@ export function stopStatusMonitor() {
   }
 }
 
-/**
- * Manually trigger a status refresh
- * Useful for on-demand updates outside the scheduled interval
- *
- * @param {Object} config - The dashboard configuration object
- * @returns {Promise<Map>} Updated status map
- */
-export async function refreshStatuses(config) {
-  const services = extractServicesFromConfig(config);
-  return await fetchAllStatuses(services);
-}
 
 /**
  * Get a summary of the current status monitoring state
