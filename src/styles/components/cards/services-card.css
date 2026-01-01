@@ -54,6 +54,7 @@
   transition: all 0.3s ease;
 }
 
+
 .logo-box:hover {
   background: rgba(255, 255, 255, 0.25);
   border-color: rgba(255, 255, 255, 0.25);

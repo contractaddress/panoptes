@@ -36,10 +36,17 @@
   margin: 0.5rem auto;
 }
 
-.tile-icon.Pi-hole-icon {
+/*.tile-icon.Pi-hole-icon {
   width: 105px;
   height: 90px;
+}*/
+
+
+.tile-icon.AdGuard-icon {
+  width: 70px;
+  height: 70px;
 }
+
 
 /* Small Tile Icon */
 .tile-icon {

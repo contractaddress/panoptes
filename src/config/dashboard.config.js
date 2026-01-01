@@ -17,24 +17,24 @@ export const dashboardConfig = {
 
   smallTiles: [
     { title: 'OpenWRT', status: 'online', icon: '/icons/openwrt.svg', location: { text: 'OpenWRT', url: 'http://openwrt.local' } },
-    { title: 'Pi-hole', status: 'online', icon: '/icons/pi-hole.svg', location: { text: 'Pi-hole', url: 'http://pihole.local' } },
-    { title: 'Immich', status: 'online', icon: '/icons/immich.svg', location: { text: 'Immich', url: 'https://immich.local' } },
-    { title: 'Wireguard', status: 'online', icon: '/icons/wireguard.svg', location: { text: 'Wireguard', url: 'https://wireguard.local' } }
+    { title: 'Gitea', status: 'online', icon: '/icons/gitea.svg', location: { text: 'gitea', url: 'http://gitea.local' } },
+    { title: 'TrueNas', status: 'online', icon: '/icons/truenas.svg', location: { text: 'TrueNas', url: 'http://truenas.local' } },
+    { title: 'Tailscale', status: 'online', icon: '/icons/tailscale.svg', location: { text: 'Tailscale', url: 'http://tailscale.local' } }
   ],
 
   servicesCard: {
     title: 'Services',
     status: 'online',
     logos: [
+      { name: 'komga', status: 'online', icon: '/icons/services/punpun.svg', location: { text: 'komga', url: 'https://komga.local' } },
+      { name: 'Immich', status: 'online', icon: '/icons/services/immich.svg', location: { text: 'immich', url: 'https://service2.local' } },
+      { name: 'Nginx', status: 'online', icon: '/icons/services/nginx.svg', location: { text: 'Nginx Proxy manager', url: 'https://service3.local' } },
+      { name: 'kiwix', status: 'online', icon: '/icons/services/kiwix.svg', location: { text: 'kiwix', url: 'https://service4.local' } },
       { name: 'Docker', status: 'online', icon: '/icons/services/docker.svg', location: { text: 'Docker', url: 'https://docker.local' } },
-      { name: 'Service 2', status: 'online', icon: '/icons/services/', location: { text: 'Service 2', url: 'https://service2.local' } },
-      { name: 'Service 3', status: 'online', icon: '/icons/services/', location: { text: 'Service 3', url: 'https://service3.local' } },
-      { name: 'Service 4', status: 'online', icon: '/icons/services/', location: { text: 'Service 4', url: 'https://service4.local' } },
-      { name: 'Service 5', status: 'online', icon: '/icons/services/', location: { text: 'Service 5', url: 'https://service5.local' } },
-      { name: 'Service 6', status: 'online', icon: '/icons/services/', location: { text: 'Service 6', url: 'https://service6.local' } },
-      { name: 'Service 7', status: 'online', icon: '/icons/services/', location: { text: 'Service 7', url: 'https://service7.local' } },
-      { name: 'Service 8', status: 'online', icon: '/icons/services/', location: { text: 'Service 8', url: 'https://service8.local' } },
-      { name: 'Service 9', status: 'online', icon: '/icons/services/', location: { text: 'Service 9', url: 'https://service9.local' } }
+      { name: 'NextCloud', status: 'online', icon: '/icons/services/nextcloud.svg', location: { text: 'NextCloud', url: 'https://service6.local' } },
+      { name: 'Adguard', status: 'online', icon: '/icons/services/adguard.svg', location: { text: 'adguard', url: 'https://service7.local' } },
+      { name: '', status: 'online', icon: '/icons/services/', location: { text: 'Service 8', url: 'https://service8.local' } },
+      { name: '', status: 'online', icon: '/icons/services/', location: { text: 'Service 9', url: 'https://service9.local' } }
     ]
   }
 };
