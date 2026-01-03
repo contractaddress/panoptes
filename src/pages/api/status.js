@@ -1,16 +1,11 @@
-/**
- * API Endpoint: Service Status
- *
- * GET /api/status - Returns current status of all services
- */
-
 import { dashboardConfig } from '../../config/dashboard.config.js';
 import {
   initializeStatusMonitor,
   getAllStatuses,
   mapStatusesToConfig,
   getMonitorSummary,
-  extractServicesFromConfig
+  extractServicesFromConfig,
+  fetchAllStatuses
 } from '../../utils/serviceStatusMonitor.js';
 
 // Initialize monitor on first load (if not already initialized)
@@ -35,6 +30,13 @@ export async function GET({ request }) {
     const url = new URL(request.url);
     const format = url.searchParams.get('format') || 'mapped';
     const forceRefresh = url.searchParams.get('refresh') === 'true';
+
+    // Force refresh if requested
+    if (forceRefresh) {
+      console.log('[API] Force refresh requested, re-checking all services...');
+      const services = extractServicesFromConfig(dashboardConfig);
+      await fetchAllStatuses(services);
+    }
 
     let response;
 

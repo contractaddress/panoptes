@@ -11,7 +11,7 @@
 // FEATURE FLAG: Enable/Disable Runtime Status Checks
 // ============================================================================
 // Set to false to disable all network checks and default all services to "online"
-export const ENABLE_STATUS_CHECKS = false;
+export const ENABLE_STATUS_CHECKS = true;
 
 // ============================================================================
 // Configuration
@@ -73,6 +73,7 @@ export function extractServicesFromConfig(config) {
     });
   }
 
+  console.log(`[Status Monitor] Extracted ${services.length} services:`, services.map(s => `${s.source}:${s.title}`));
   return services;
 }
 
@@ -91,9 +92,13 @@ export async function checkServiceStatus(url, title = '') {
     return 'online';
   }
 
+  console.log(`[Status Check] Checking ${title} at ${url}...`);
+
   // Special handling for Proxmox - use connectivity check instead of HTTP
   if (title.toLowerCase().includes('proxmox')) {
-    return checkProxmoxConnectivity(url);
+    const status = await checkProxmoxConnectivity(url);
+    console.log(`[Status Check] ${title} (Proxmox): ${status}`);
+    return status;
   }
 
   try {
@@ -109,9 +114,12 @@ export async function checkServiceStatus(url, title = '') {
     clearTimeout(timeoutId);
 
     // Simple logic: 200 = online, everything else = offline
-    return response.status === 200 ? 'online' : 'offline';
+    const status = response.status === 200 ? 'online' : 'offline';
+    console.log(`[Status Check] ${title}: ${status} (HTTP ${response.status})`);
+    return status;
   } catch (error) {
     // Any error = offline
+    console.log(`[Status Check] ${title}: offline (Error: ${error.message})`);
     return 'offline';
   }
 }
@@ -123,6 +131,8 @@ export async function checkServiceStatus(url, title = '') {
  * @returns {Promise<Map>} Map of serviceId to status data
  */
 export async function fetchAllStatuses(services) {
+  console.log(`[Status Monitor] Fetching statuses for ${services.length} services...`);
+
   const statusPromises = services.map(async (service) => {
     const status = await checkServiceStatus(service.url, service.title);
     return {
@@ -144,6 +154,12 @@ export async function fetchAllStatuses(services) {
   });
 
   statusMap = newStatusMap;
+
+  console.log(`[Status Monitor] Status map updated with ${statusMap.size} entries:`);
+  statusMap.forEach((value, key) => {
+    console.log(`  - ${key}: ${value.status}`);
+  });
+
   return statusMap;
 }
 
@@ -316,7 +332,6 @@ async function checkProxmoxConnectivity(url) {
 
     clearTimeout(timeoutId);
     
-    // If we get here, the connection was successful
     console.log(`[Proxmox Check] Connection successful to ${urlObj.hostname}:${urlObj.port || '8006'}`);
     return 'online';
     
