@@ -31,9 +31,9 @@ export const dashboardConfig = {
       { name: 'NextCloud', status: 'online', icon: '/icons/services/nextcloud.svg', location: { text: 'NextCloud', url: 'http://nextcloud.lan:8080' } },
       { name: 'kiwix', status: 'online', icon: '/icons/services/kiwix.svg', location: { text: 'kiwix', url: 'https://service4.local' } },
       { name: 'Docker', status: 'online', icon: '/icons/services/docker.svg', location: { text: 'Docker', url: 'https://docker.local' } },
-      { name: 'Nginx', status: 'online', icon: '/icons/services/nginx.svg', location: { text: 'Nginx Proxy manager', url: 'https://service3.local' } },
+      { name: 'Suwayomi', status: 'online', icon: '/icons/services/suwayomi.svg', location: { text: 'Service 8', url: 'https://service8.local' } },
       { name: 'Pi-hole', status: 'online', icon: '/icons/services/pi-hole.svg', location: { text: 'pi-hole', url: 'https://service7.local' } },
-      { name: '', status: 'online', icon: '/icons/services/', location: { text: 'Service 8', url: 'https://service8.local' } },
+      { name: 'Nginx', status: 'online', icon: '/icons/services/nginx.svg', location: { text: 'Nginx Proxy manager', url: 'https://service3.local' } },
       { name: '', status: 'online', icon: '/icons/services/', location: { text: 'Service 9', url: 'https://service9.local' } }
     ]
   }
