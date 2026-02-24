@@ -7,15 +7,19 @@ dist/
 node_modules/
 
 # logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
+*.log
 
 # environment variables
 .env
 .env.production
+
+# lock files
+bun.lock
+bun.lockb
+package-lock.json
+
+# Bun
+.bun/
 
 #personal-documentation
 md/
