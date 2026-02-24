@@ -34,7 +34,7 @@ export const dashboardConfig = {
       { name: 'Suwayomi', status: 'online', icon: '/icons/services/suwayomi.svg', location: { text: 'Service 8', url: 'https://service8.local' } },
       { name: 'Pi-hole', status: 'online', icon: '/icons/services/pi-hole.svg', location: { text: 'pi-hole', url: 'https://service7.local' } },
       { name: 'Nginx', status: 'online', icon: '/icons/services/nginx.svg', location: { text: 'Nginx Proxy manager', url: 'https://service3.local' } },
-      { name: '', status: 'online', icon: '/icons/services/', location: { text: 'Service 9', url: 'https://service9.local' } }
+      { name: '', status: 'online', icon: '/icons/services/authentik.svg', location: { text: 'Authentik', url: 'https://service9.local' } }
     ]
   }
 };
