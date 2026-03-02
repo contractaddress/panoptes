@@ -1,11 +1,4 @@
-/** SEMI-VIBE CODED API UNTIL I'VE LEARNED HTTP REQUESTS AND MAPPING IN JS :D
- *
- * Service Status Monitor
- *
- * A modular system for monitoring the online status of homelab services.
- * Extracts URLs from dashboard config, performs network checks, and maintains
- * a runtime status map separate from the static configuration.
- */
+// VIBE CODED API UNTIL I'VE LEARNED HTTP REQUESTS AND MAPPING IN JS :D
 
 // ============================================================================
 // FEATURE FLAG: Enable/Disable Runtime Status Checks
@@ -26,9 +19,6 @@ let statusMap = new Map(); // Map<serviceId, {status, lastChecked, url}>
 let intervalId = null;
 
 /**
- * Extract all services with URLs from the dashboard config
- * Returns an array of service objects with unique identifiers
- *
  * @param {Object} config - The dashboard configuration object
  * @returns {Array} Array of {id, title, url, source} objects
  */
@@ -78,10 +68,6 @@ export function extractServicesFromConfig(config) {
 }
 
 /**
- * Check if a single service is online
- * Simple check: 200 = online, anything else = offline
- * For Proxmox, uses a simple connectivity check instead of HTTP
- *
  * @param {string} url - The URL to check
  * @param {string} title - The service title for special handling
  * @returns {Promise<string>} Status: 'online' or 'offline'
@@ -164,8 +150,6 @@ export async function fetchAllStatuses(services) {
 }
 
 /**
- * Get the current status for a specific service by ID
- *
  * @param {string} serviceId - The unique service identifier
  * @returns {Object|null} Status object or null if not found
  */
@@ -174,8 +158,6 @@ export function getServiceStatus(serviceId) {
 }
 
 /**
- * Get all current statuses
- *
  * @returns {Map} Complete status map
  */
 export function getAllStatuses() {
@@ -183,10 +165,6 @@ export function getAllStatuses() {
 }
 
 /**
- * Map statuses to config structure
- * Returns a structured object that mirrors the original config
- * but contains only runtime status information
- *
  * @param {Object} config - Original dashboard config
  * @returns {Object} Status structure matching config shape
  */
@@ -238,9 +216,6 @@ export function mapStatusesToConfig(config) {
 }
 
 /**
- * Initialize the status monitoring system
- * Performs initial status check and sets up auto-refresh
- *
  * @param {Object} config - The dashboard configuration object
  * @returns {Promise<void>}
  */
@@ -260,10 +235,6 @@ export async function initializeStatusMonitor(config) {
   }
 }
 
-/**
- * Stop the status monitoring system
- * Clears the auto-refresh interval
- */
 export function stopStatusMonitor() {
   if (intervalId) {
     clearInterval(intervalId);
@@ -273,9 +244,6 @@ export function stopStatusMonitor() {
 
 
 /**
- * Get a summary of the current status monitoring state
- * Useful for debugging and monitoring
- *
  * @returns {Object} Summary object
  */
 export function getMonitorSummary() {
@@ -296,9 +264,6 @@ export function getMonitorSummary() {
 }
 
 /**
- * proxmox was being a pain to check connectivity
- * so i gave it its own status checker
- *
  * @param {string} url - The Proxmox URL to check
  * @returns {Promise<string>} Status: 'online' or 'offline'
  */

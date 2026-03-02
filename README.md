@@ -2,7 +2,9 @@
 
 ![Dashboard Preview](public/dashboardpreview.png)
 
-A minimal, self-hosted dashboard for monitoring homelab services with real-time status updates.
+**A minimal, self-hosted dashboard for your rack monitor!**
+
+this is a personal project so in it's current state it is very inconvenient to change the actual services (sorry). But worry not! i plan to make the services changeable straight from the dashboard.
 
 > NOTE: the API is heavily  vibe coded as i am still fairly unfamiliar with Javascript. ONLY use in trusted environments
 
