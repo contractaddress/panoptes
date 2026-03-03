@@ -2,11 +2,13 @@
 
 ![Dashboard Preview](public/dashboardpreview.png)
 
-**A minimal, self-hosted dashboard for your rack monitor!**
+**A minimal, self-hosted dashboard for your 10" rack monitor!**
 
 this is a personal project so in it's current state it is very inconvenient to change the actual services (sorry). But worry not! i plan to make the services changeable straight from the dashboard.
 
 > NOTE: the API is heavily  vibe coded as i am still fairly unfamiliar with Javascript. ONLY use in trusted environments
+
+*if you're interested in my homelab: [here](https://github.com/contractaddress/homelab)*
 
 ## Installation
 
@@ -20,7 +22,6 @@ bun install && bun run build
 
 ```bash
 bun run preview
-
 ```
 
 once it's done cooking head to <http://localhost:4321>
@@ -58,3 +59,5 @@ Edit `src/config/dashboard.config.js` to add/remove services. Each service requi
 - `title`: Display name
 - `icon`: Path to SVG icon
 - `location.url`: URL for status checks
+
+![irldashboardpreview](public/panoptesIRL.png)
