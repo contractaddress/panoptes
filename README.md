@@ -11,10 +11,19 @@ this is a personal project so in it's current state it is very inconvenient to c
 ## Installation
 
 ```bash
-bun install
-bun run build
-bun run preview
+git clone <url> && cd panoptes
 ```
+
+```bash
+bun install && bun run build
+```
+
+```bash
+bun run preview
+
+```
+
+once it's done cooking head to <http://localhost:4321>
 
 ## Features
 
