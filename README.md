@@ -13,7 +13,7 @@ this is a personal project so in it's current state it is very inconvenient to c
 ## Installation
 
 ```bash
-git clone <url> && cd panoptes
+git clone https://github.com/contractaddress/panoptes.git && cd panoptes
 ```
 
 ```bash
